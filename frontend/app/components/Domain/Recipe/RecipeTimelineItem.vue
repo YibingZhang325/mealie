@@ -14,8 +14,8 @@
       class="elevation-12"
       @click="$emit('selected')"
     >
-      <v-card-title class="background text-wrap">
-        <v-row>
+      <v-card-title class="background timeline-event-title">
+        <v-row class="timeline-event-title-row">
           <v-col align-self="center" :cols="useMobileFormat ? 'auto' : '2'" :class="attrs.avatar.class">
             <UserAvatar :user-id="event.userId" :size="attrs.avatar.size" />
           </v-col>
@@ -25,7 +25,7 @@
               {{ $d(new Date(event.timestamp || "")) }}
             </v-chip>
           </v-col>
-          <v-col v-else cols="9" class="break-word" style="margin: auto; text-align: center">
+          <v-col v-else cols="9" class="timeline-event-subject" style="margin: auto; text-align: center">
             {{ event.subject }}
           </v-col>
           <v-col :cols="useMobileFormat ? 'auto' : '1'" class="px-0 pt-0">
@@ -182,5 +182,19 @@ const eventImageUrl = computed<string>(() => {
 
 .break-word {
   overflow-wrap: anywhere;
+}
+
+.timeline-event-title {
+  white-space: normal;
+}
+
+.timeline-event-title-row,
+.timeline-event-subject {
+  min-width: 0;
+}
+
+.timeline-event-subject {
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 </style>
