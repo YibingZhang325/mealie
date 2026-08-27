@@ -26,6 +26,10 @@ def paprika_recipes(file: Path):
                     yield recipe
 
 
+def split_ingredients(ingredients: str) -> list[str]:
+    return ingredients.rstrip("\r\n").splitlines() if ingredients else []
+
+
 class PaprikaMigrator(BaseMigrator):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -35,7 +39,7 @@ class PaprikaMigrator(BaseMigrator):
         re_num_list = re.compile(r"^\d+\.\s")
 
         self.key_aliases = [
-            MigrationAlias(key="recipeIngredient", alias="ingredients", func=lambda x: x.split("\n") if x else ""),
+            MigrationAlias(key="recipeIngredient", alias="ingredients", func=split_ingredients),
             MigrationAlias(key="orgURL", alias="source_url", func=None),
             MigrationAlias(key="totalTime", alias="total_time", func=None),
             MigrationAlias(key="prepTime", alias="prep_time", func=None),
